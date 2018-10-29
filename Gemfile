@@ -53,7 +53,7 @@ gem 'json'
 gem 'rest-client'
 
 gem 'cocoon'
-gem 'pg'
+gem 'pg', '~> 0.18'
 # later we can strict the faker
 # to staging && development
 gem 'ffaker'
@@ -85,6 +85,7 @@ group :development, :test do
 
   gem 'jasmine'
   gem 'jasmine-jquery-rails'
+  gem 'parallel_tests'
 end
 
 group :test do

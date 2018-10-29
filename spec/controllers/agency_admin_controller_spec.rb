@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AgencyAdminController, type: :controller do
+RSpec.describe AgencyAdminController, type: :controller, clean_as_group: true do
   let(:agency)        { FactoryBot.create(:agency) }
   let!(:agency_admin) { FactoryBot.create(:agency_admin, agency: agency) }
   let(:case_manager)  { FactoryBot.create(:case_manager, agency: agency) }
@@ -104,7 +104,7 @@ RSpec.describe AgencyAdminController, type: :controller do
     end
   end
 
-  describe 'XHR GET #job_properties' do
+  describe 'XHR GET #job_properties', clean_db: true do
     before(:each) do
       25.times do |n|
         FactoryBot.create(:job_category, name: "CAT#{n}")
@@ -168,7 +168,7 @@ RSpec.describe AgencyAdminController, type: :controller do
     end
   end
 
-  describe 'action authorization' do
+  describe 'action authorization', clean_db: true do
     context '.home' do
       it 'authorizes agency_admin' do
         expect(subject).to_not receive(:user_not_authorized)

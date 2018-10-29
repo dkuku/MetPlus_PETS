@@ -20,7 +20,6 @@
 require 'rubygems'
 require 'factory_bot'
 require 'email-spec'
-require 'codeclimate-test-reporter'
 require 'webmock/rspec'
 require 'pundit/rspec'
 
@@ -35,7 +34,6 @@ include ServiceStubHelpers::RecaptchaValidator
 #  This allows non-mocked external service calls to proceed:
 WebMock.allow_net_connect!
 
-CodeClimate::TestReporter.start
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -116,6 +114,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   config.before(:suite) do
+    DatabaseCleaner.strategy = :truncation
     DatabaseCleaner.clean_with(:truncation, pre_count: true, reset_ids: true)
   end
 
@@ -134,13 +133,39 @@ RSpec.configure do |config|
       DatabaseCleaner.strategy = :truncation
     end
   end
-
-  config.before(:each) do
-    DatabaseCleaner.start
+  config.before(:all) do
+    # Clean before each example group if clean_as_group is set
+    if self.class.metadata[:clean_as_group]
+      DatabaseCleaner.clean
+    end
   end
 
-  config.append_after(:each) do
-    DatabaseCleaner.clean
+  config.after(:all) do
+    # Clean after each example group if clean_as_group is set
+    if self.class.metadata[:clean_as_group]
+      DatabaseCleaner.clean
+    end
+  end
+
+  config.before(:each) do
+    # Clean before each example unless clean_as_group is set
+    unless self.class.metadata[:clean_as_group]
+      DatabaseCleaner.start
+    end
+    if self.class.metadata[:clean_db]
+      DatabaseCleaner.clean
+      DatabaseCleaner.start
+    end
+  end
+
+  config.after(:each) do
+    # Clean before each example unless clean_as_group is set
+    unless self.class.metadata[:clean_as_group]
+      DatabaseCleaner.clean
+    end
+    if self.class.metadata[:clean_db]
+      DatabaseCleaner.clean
+    end
   end
 
   config.include(EmailSpec::Helpers)

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AgenciesController, type: :controller do
+RSpec.describe AgenciesController, type: :controller, clean_as_group: true do
   let!(:agency)       { FactoryBot.create(:agency) }
   let(:agency_admin)  { FactoryBot.create(:agency_admin, agency: agency) }
   let(:job_developer) { FactoryBot.create(:job_developer, agency: agency) }

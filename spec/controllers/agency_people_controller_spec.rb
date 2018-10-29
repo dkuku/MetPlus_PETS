@@ -515,26 +515,26 @@ RSpec.describe AgencyPeopleController, type: :controller do
 
   describe 'GET #my_js_as_jd' do
     context 'job developer cum case manager with job seekers' do
+
+        let(:user1) {FactoryBot.create(:user, first_name: 'John', last_name: 'Joe')}
+        let(:js1) {FactoryBot.create(:job_seeker, user: user1)}
+
+        let(:user2) {FactoryBot.create(:user, first_name: 'Jack', last_name: 'Doe')}
+        let(:js2) {FactoryBot.create(:job_seeker, user: user2)}
+
+        let(:user3) {FactoryBot.create(:user, first_name: 'Adam', last_name: 'Doe')}
+        let(:js3) {FactoryBot.create(:job_seeker, user: user3)}
+
+        let(:js4) {FactoryBot.create(:job_seeker)}
+
       before :each do
         @jd_cm = FactoryBot.create(:jd_cm, agency: agency)
         @job_developer = FactoryBot.create(:job_developer, agency: agency)
-
-        @user1 = FactoryBot.create(:user, first_name: 'John', last_name: 'Joe')
-        @js1 = FactoryBot.create(:job_seeker, user: @user1)
-        @js1.assign_job_developer(@jd_cm, agency)
-
-        @user2 = FactoryBot.create(:user, first_name: 'Jack', last_name: 'Doe')
-        @js2 = FactoryBot.create(:job_seeker, user: @user2)
-        @js2.assign_job_developer(@jd_cm, agency)
-
-        @user3 = FactoryBot.create(:user, first_name: 'Adam', last_name: 'Doe')
-        @js3 = FactoryBot.create(:job_seeker, user: @user3)
-        @js3.assign_job_developer(@jd_cm, agency)
-
-        @js4 = FactoryBot.create(:job_seeker)
-        @js4.assign_job_developer(@job_developer, agency)
-        @js4.assign_case_manager(@jd_cm, agency)
-
+        js1.assign_job_developer(@jd_cm, agency)
+        js2.assign_job_developer(@jd_cm, agency)
+        js3.assign_job_developer(@jd_cm, agency)
+        js4.assign_job_developer(@job_developer, agency)
+        js4.assign_case_manager(@jd_cm, agency)
         sign_in @jd_cm
       end
 
@@ -544,7 +544,7 @@ RSpec.describe AgencyPeopleController, type: :controller do
       end
 
       it 'returns his job seekers in alphabetical order' do
-        [@js1, @js2, @js3].each do |js|
+        [js1, js2, js3].each do |js|
           FactoryBot.create(:resume, job_seeker: js)
         end
 
@@ -552,47 +552,47 @@ RSpec.describe AgencyPeopleController, type: :controller do
         expect(JSON.parse(response.body))
           .to eq('results' =>
             [
-              { 'id' => @js3.id, 'text' => @js3.full_name },
-              { 'id' => @js2.id, 'text' => @js2.full_name },
-              { 'id' => @js1.id, 'text' => @js1.full_name }
+              { 'id' => js3.id, 'text' => js3.full_name },
+              { 'id' => js2.id, 'text' => js2.full_name },
+              { 'id' => js1.id, 'text' => js1.full_name }
             ])
       end
 
       it 'returns his job seekers with consent' do
-        [@js1, @js2, @js3].each do |js|
+        [js1, js2, js3].each do |js|
           FactoryBot.create(:resume, job_seeker: js)
         end
 
-        @js1.update_attribute(:consent, false)
+        js1.update_attribute(:consent, false)
         xhr :get, :my_js_as_jd, id: @jd_cm.id, format: :json
         expect(JSON.parse(response.body))
           .to eq('results' =>
             [
-              { 'id' => @js3.id, 'text' => @js3.full_name },
-              { 'id' => @js2.id, 'text' => @js2.full_name }
+              { 'id' => js3.id, 'text' => js3.full_name },
+              { 'id' => js2.id, 'text' => js2.full_name }
             ])
       end
 
       it 'disables application for his job seekers without resume' do
-        FactoryBot.create(:resume, job_seeker: @js1)
+        FactoryBot.create(:resume, job_seeker: js1)
         xhr :get, :my_js_as_jd, id: @jd_cm.id, format: :json
         expect(JSON.parse(response.body))
           .to eq('results' =>
             [
-              { 'id' => @js3.id, 'text' => @js3.full_name, 'disabled' => 'disabled' },
-              { 'id' => @js2.id, 'text' => @js2.full_name, 'disabled' => 'disabled' },
-              { 'id' => @js1.id, 'text' => @js1.full_name }
+              { 'id' => js3.id, 'text' => js3.full_name, 'disabled' => 'disabled' },
+              { 'id' => js2.id, 'text' => js2.full_name, 'disabled' => 'disabled' },
+              { 'id' => js1.id, 'text' => js1.full_name }
             ])
       end
     end
 
     context 'job developer without job seeker' do
       before :each do
-        @job_developer1 = FactoryBot.create(:job_developer, agency: agency)
-        @js1 = FactoryBot.create(:job_seeker)
-        @js2 = FactoryBot.create(:job_seeker)
-        sign_in @job_developer1
-        xhr :get, :my_js_as_jd, id: @job_developer1.id, format: :json
+        job_developer1 = FactoryBot.create(:job_developer, agency: agency)
+        js1 = FactoryBot.create(:job_seeker)
+        js2 = FactoryBot.create(:job_seeker)
+        sign_in job_developer1
+        xhr :get, :my_js_as_jd, id: job_developer1.id, format: :json
       end
 
       it 'returns http success' do
@@ -606,7 +606,7 @@ RSpec.describe AgencyPeopleController, type: :controller do
     end
   end
 
-  describe 'action authorization' do
+  describe 'action authorization', clean_as_group: true do
     context '#show' do
       it 'authorizes agency person' do
         expect(subject).to_not receive(:user_not_authorized)

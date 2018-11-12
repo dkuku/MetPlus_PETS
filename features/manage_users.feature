@@ -155,7 +155,7 @@ Scenario: Resend confirmation email - sad path
     And I fill in "user_password" with "password"
     And I check "user_remember_me"
     And I click "Log in" button
-    Then I click the "dd_menu" link
+    Then I click the "dd-menu" link
     And I log out
     Then I wait for 1 second
     Then I should be logged out

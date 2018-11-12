@@ -1,12 +1,11 @@
 - provide(:home_active, 'active')
 .row
-  .col-sm-12.col-md-12.col-lg-12.about-image
+  .col.about-image
     = image_tag('MetPlus_Home_Banner.gif')
     .blue-bar
       Public Employment Tracking System (PETS)
-.row
-  .col-md-8.col-md-offset-2.content-center
-
+.row.justify-content-center
+  .col-md-8.mx-1
     = image_tag('PETS_Logo.jpg', size: '250x220')
     %br
       %h1 Welcome to MET|PLUS PETS
@@ -20,8 +19,8 @@
       %a{ href: 'http://www.metplus.org', target: '_blank' } Learn more about
       MET|PLUS.
     %br
-.row
-  .col-md-5.col-md-offset-0.grey-block
+.row.justify-content-between
+  .col-lg-5.grey-block
     = image_tag('MetPlus_employer.png')
     %p
       = link_to 'Register as a Job Seeker', new_job_seeker_path, class: 'btn btn-primary btn-lg button-white'
@@ -37,7 +36,7 @@
     %br Entrepreneurial Guidance
     %br PETS resources, including job postings and online applications
 
-  .col-md-5.col-md-offset-2.grey-block
+  .col-lg-5.grey-block
     = image_tag('MetPlus_job_seeker.png')
     %p
       = link_to 'Register as an Employer', new_company_registration_path, class: 'btn btn-primary btn-lg button-white'

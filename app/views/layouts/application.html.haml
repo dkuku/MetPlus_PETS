@@ -26,16 +26,16 @@
     = javascript_include_tag 'https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.7/moment-timezone-with-data.min.js'
     = favicon_link_tag 'PETS_Logo.jpg'
   %body
-    %a{:href => '#top'}
+    %a{ href: '#top' }
     = render partial: 'layouts/menu'
-    %div{:class => 'content container'}
-      %div{:class => 'row', :id => 'messages'}
-        %div{:class => 'container'}
+    .content.container
+      .row#messages
+        %div
           - flash.each do |key, value|
-            %div{:class => "alert #{flash_to_css key}"}
+            %div{ class: "alert #{flash_to_css key}" }
               = value
-              %a{href: "#", class: "close", "data-dismiss" =>  "alert",  "aria-label" => "close"} &times;
-      %div{:class => 'row'}
+              %a.close{ href: "#", "data-dismiss": "alert", "aria-label": "close" } &times;
+      .row
         = yield
     = render 'layouts/footer'
     = content_for :scripts

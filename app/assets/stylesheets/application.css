@@ -17,7 +17,6 @@
  /*homepage css*/
  body {
    font-family: 'Open Sans', sans-serif;
-   font-size: 14px;
  }
 
  .pagination{
@@ -162,7 +161,7 @@ body {
   float: right;
 }
 
-.footer > .container {
+.footer > .box {
   padding-top: 10px;
   position: relative;
   top: 50%;
@@ -172,11 +171,11 @@ body {
   width: 100%;
 }
 
-.footer > .container > .footer-right > a {
+.footer > .box > .footer-right > a {
     color: #fff;
 }
 
-.footer > .container > .footer-right .active{
+.footer > .box > .footer-right .active{
   color: yellow;
 }
 
@@ -195,7 +194,6 @@ body {
 }
 
 .navbar-default .navbar-text{
-    position: relative;
     display: block;
     color: white;
 }

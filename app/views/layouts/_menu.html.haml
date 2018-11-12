@@ -24,7 +24,8 @@
               %li.nav-item.dropdown
                 %a.dropdown-toggle.nav-link#dd-menu{ 'data-toggle': 'dropdown', href: "#",
                   role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
-                  = ("Admin" + "<span class='caret'></span>").html_safe
+                  Admin
+                  %span.caret
                 %ul.dropdown-menu{ 'aria-labelledby': 'dd-menu' }
                   %li{ class: "nav-item #{ yield(:agency_admin_active) }" }
                     = link_to 'Agency and Partner Companies',
@@ -41,7 +42,7 @@
               %div
                 -# TODO check why Then I click the 'Log In' link fails?? ?responive or button
                 = link_to 'Log In', login_path,
-                  class: 'btn btn-outline-light', id: 'login_button'
+                  class: 'btn btn-outline-light btn-sm', id: 'login_button'
         - else
           %li.menu-item
             %li.menu-item.dropdown
@@ -49,7 +50,7 @@
                 role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
                 Hello,
                 %span.navbar-name= current_user.first_name
-                = ("<span class='caret'></span>").html_safe
+                %span.caret
               %ul.dropdown-menu{ 'aria-labelledby': 'dd-menu' }
                 %li
                   - if current_user.actable_type == 'JobSeeker'

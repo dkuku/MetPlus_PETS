@@ -1,12 +1,12 @@
 - provide(:home_active, 'active')
 .row
-  .col.about-image
+  .about-image
     = image_tag('MetPlus_Home_Banner.gif')
     .blue-bar
       Public Employment Tracking System (PETS)
 .row.justify-content-center
-  .col-md-8.mx-1
-    = image_tag('PETS_Logo.jpg', size: '250x220')
+  .col-md-8.mx-1{ align: 'center' }
+    = image_tag 'PETS_Logo.jpg', size: '250x220'
     %br
       %h1 Welcome to MET|PLUS PETS
     %p
@@ -19,35 +19,31 @@
       %a{ href: 'http://www.metplus.org', target: '_blank' } Learn more about
       MET|PLUS.
     %br
-.row.justify-content-between
+.row.justify-content-around
   .col-lg-5.grey-block
     = image_tag('MetPlus_employer.png')
     %p
       = link_to 'Register as a Job Seeker', new_job_seeker_path, class: 'btn btn-primary btn-lg button-white'
-    %br
-    %br
-    .h4
+    .h4.mt-2
       MET|PLUS helps you get ready for your next job opportunity by providing
       you with:
-    %p
-    %br Hands-on Job Training
-    %br Employment Services
-    %br Job Skill Enhancement
-    %br Entrepreneurial Guidance
-    %br PETS resources, including job postings and online applications
+    %ul.list-unstyled
+      %li.mb-3 Hands-on Job Training
+      %li.mb-3 Employment Services
+      %li.mb-3 Job Skill Enhancement
+      %li.mb-3 Entrepreneurial Guidance
+      %li PETS resources, including job postings and online applications
 
   .col-lg-5.grey-block
     = image_tag('MetPlus_job_seeker.png')
     %p
       = link_to 'Register as an Employer', new_company_registration_path, class: 'btn btn-primary btn-lg button-white'
-    %br
-    %br
-    .h4
+    .h4.mt-2
       MET|PLUS partners with you to help find quality employees from our
       list of job seekers:
-    %p
-    %br Prescreening Job Seekers
-    %br Recruiting and Tracking
-    %br Job Fair Facilitation
-    %br Statistical Research
-    %br PETS resources, such as job posting, job seeker matching, and others
+    %ul.list-unstyled
+      %li.mb-3 Prescreening Job Seekers
+      %li.mb-3 Recruiting and Tracking
+      %li.mb-3 Job Fair Facilitation
+      %li.mb-3 Statistical Research
+      %li PETS resources, such as job posting, job seeker matching, and others

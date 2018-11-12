@@ -1,18 +1,18 @@
 %nav.navbar.navbar-dark.navbar-expand-lg.navbar-fixed-top{ data: { spy: "scroll" } }
   .container
     = link_to agency_display_name, root_path, class: 'navbar-brand'
-    %button.navbar-toggler{ data: { toggle: "collapse", "target": "#navbar_nav" },
-      "aria-controls": "navbar_nav",
+    %button.navbar-toggler{ data: { toggle: "collapse", "target": "#navbar-nav" },
+      "aria-controls": "navbar-nav",
       "aria-expanded": "false",
       "aria-label": "Toggle navigation" }
       %span.navbar-toggler-icon
-    %div.navbar-collapse.collapse#navbar_nav
+    .navbar-collapse.collapse#navbar-nav
       %ul.navbar-nav.mr-auto
         - if user_signed_in?
           %li{ class: "nav-item #{ yield(:person_home_active) }" }
             = link_to "Home", show_person_home_page_path(pets_user), class: "nav-link"
-        %li{ :class => "nav-item #{ yield(:job_active) }" }
-          %a{:href => '/jobs', id: 'job', class: "nav-link" }
+        %li{ class: "nav-item #{ yield(:job_active) }" }
+          %a.nav-link#job{ href: '/jobs' }
             Jobs
         %li{ :class => "nav-item #{ yield(:about_active) }" }
           = link_to 'About', about_path, id: 'about', class: "nav-link"
@@ -22,43 +22,50 @@
           - if user_signed_in?
             - if current_user_agency_admin?
               %li.nav-item.dropdown
-                %a{href: '#', class: 'dropdown-toggle nav-link', 'data-toggle' => 'dropdown',
-                        role: 'button', 'aria-haspopup' => 'true',
-                         id: 'dd_menu', 'aria-expanded' => 'false'}
+                %a.dropdown-toggle.nav-link#dd-menu{ 'data-toggle': 'dropdown', href: "#",
+                  role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
                   = ("Admin" + "<span class='caret'></span>").html_safe
-                %ul.dropdown-menu{'aria-labelledby' => 'dd_menu'}
-                  %li{ :class => "nav-item #{ yield(:agency_admin_active) }" }
+                %ul.dropdown-menu{ 'aria-labelledby': 'dd-menu' }
+                  %li{ class: "nav-item #{ yield(:agency_admin_active) }" }
                     = link_to 'Agency and Partner Companies',
                       agency_admin_home_path,
                       class: "nav-link"
-                  %li{ :class => "nav-item #{ yield(:agency_admin_job_active) }" }
+                  %li{ class: "nav-item #{ yield(:agency_admin_job_active) }" }
                     = link_to 'Job Properties',
                       agency_admin_job_properties_path,
                       class: "nav-link"
-      %ul{:class => 'nav navbar-nav navbar-right'}
+      %ul.nav.navbar-nav.navbar-right
         - if !user_signed_in?
           %li
             -if !(params[:controller]=='devise/sessions' && params[:action]=='new' || params[:action]== 'create')
               %div
-                = link_to 'Log In', login_path, class: 'btn btn-outline-light', id: 'login_button'
+                -# TODO check why Then I click the 'Log In' link fails?? ?responive or button
+                = link_to 'Log In', login_path,
+                  class: 'btn btn-outline-light', id: 'login_button'
         - else
           %li.menu-item
             %li.menu-item.dropdown
-              %a{ href: '#', class: 'dropdown-toggle nav-link', 'data-toggle' => 'dropdown',
-                        role: 'button', 'aria-haspopup' => 'true',
-                         id: 'dd_menu', 'aria-expanded' => 'false' }
+              %a.dropdown-toggle.nav-link#dd-menu{ href: "#", 'data-toggle': 'dropdown',
+                role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false' }
                 Hello,
                 %span.navbar-name= current_user.first_name
                 = ("<span class='caret'></span>").html_safe
-              %ul.dropdown-menu{ 'aria-labelledby' => 'dd_menu' }
+              %ul.dropdown-menu{ 'aria-labelledby': 'dd-menu' }
                 %li
                   - if current_user.actable_type == 'JobSeeker'
-                    = link_to 'My Profile', my_profile_job_seeker_path(current_user.actable_id), class: 'nav-link'
+                    = link_to 'My Profile',
+                      my_profile_job_seeker_path(current_user.actable_id),
+                      class: 'nav-link'
                   - elsif current_user.actable_type == 'CompanyPerson'
-                    = link_to 'My Profile', my_profile_company_person_path(current_user.actable_id), class: 'nav-link'
+                    = link_to 'My Profile',
+                      my_profile_company_person_path(current_user.actable_id),
+                      class: 'nav-link'
                   - elsif current_user.actable_type == 'AgencyPerson'
-                    = link_to 'My Profile', my_profile_agency_person_path(current_user.actable_id), class: 'nav-link'
+                    = link_to 'My Profile',
+                      my_profile_agency_person_path(current_user.actable_id),
+                      class: 'nav-link'
                   - else
-                    = link_to 'Edit Profile', edit_user_registration_path(current_user), class: 'nav-link'
+                    = link_to 'Edit Profile',
+                      edit_user_registration_path(current_user), class: 'nav-link'
                 %li
                   = link_to 'Log out', logout_path, method: :delete, class: 'nav-link'

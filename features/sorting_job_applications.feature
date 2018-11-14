@@ -1,7 +1,8 @@
-Feature: Apply to a job
+Feature: Sort job applications
 
   As a job seeker
-  I want to apply to a job
+  I want to apply for jobs
+  And have the possibility to sort the applications
 
   Background: adding job to database
     Given the default settings are present

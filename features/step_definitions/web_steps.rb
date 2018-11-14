@@ -308,3 +308,6 @@ Then(/^I should( not)? see a link pointing to "([^"]*)"$/) do |negation, link|
     expect(page).to have_selector(:css, "a[href$='#{link}']")
   end
 end
+Then(/^I wait for a link pointing to "(.*?)"$/) do |link|
+  page.find(:css, "a[href$='#{link}']")
+end

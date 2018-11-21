@@ -1,18 +1,17 @@
 .row.center-aligned-container
 
-  .col-sm-8.col-sm-offset-2{ style: 'text-align: center;' }
+  .col-sm-7.offset-2{ style: 'text-align: center;' }
     = will_paginate entities,
-                    renderer: RemoteLinkPaginationHelper::BootstrapLinkRenderer,
-                    class: paginate_class
+                    renderer: WillPaginate::ActionView::BootstrapLinkRenderer
 
-  .col-sm-2{ style: 'text-align: right;' }
+  .col-sm-1{ style: 'text-align: right;' }
     = select_tag(:items_count, paginate_count_options(items_count),
                  data: { remote: true,
                          url: url },
-                 class: paginate_class )
+                 class: 'form-control' )
+  .col-sm-2
+    %span.fa.fa-info-circle.control-label{ title: 'Select number of items per page', data: {toggle: 'tooltip'} }
 
-    %span.glyphicon.glyphicon-info-sign{ title: 'Select number of items per page',
-                                         data: {toggle: 'tooltip'} }
 -#
   for background on will_paginate method args, see:
   https://github.com/yrgoldteeth/bootstrap-will_paginate (adds bootstrap-style

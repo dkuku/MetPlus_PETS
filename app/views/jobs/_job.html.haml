@@ -2,7 +2,7 @@
   %h4
     = link_to job.title, job_path(job)
     - unless job.active?
-      %span.label.label-info
+      %span.badge.label-info
         #{job.status.capitalize}
   %h5
     = job.company.name

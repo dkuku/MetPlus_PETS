@@ -36,7 +36,7 @@
             - if job.address
               = job.address.city
           %td
-            %span.label{ class: "label-#{job.status}" }
+            %span.badge-pill{ class: "label-#{job.status}" }
               #{job.status.capitalize}
 
   = render partial: 'shared/paginate_footer',

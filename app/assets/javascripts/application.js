@@ -19,7 +19,8 @@
 //= require_self
 //= require cocoon
 //= require_tree .
-
+//= require popper
+//= require bootstrap
 PETS = {
     /**
      * Create an object that abstracts the spinner used by the application

@@ -13,6 +13,9 @@
  *= require_tree .
  *= require_self
  */
+$blue: #0c7ba1 !default;
+
+@import 'bootstrap';
 
  /*homepage css*/
  body {

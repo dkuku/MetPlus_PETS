@@ -37,7 +37,7 @@ gem 'devise_invitable', '~> 1.5.2'
 gem 'figaro'
 
 gem 'will_paginate'
-gem 'bootstrap-will_paginate'
+gem 'will_paginate-bootstrap4'
 
 ## Authorization gem
 gem "pundit"
